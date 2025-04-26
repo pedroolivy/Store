@@ -1,4 +1,6 @@
-﻿namespace Store.Domain.Commands.Interfaces
+﻿using Store.Domain.Commands.Interfaces;
+
+namespace Store.Domain.Commands
 {
     public class GenericCommandResult : ICommandResult
     {
