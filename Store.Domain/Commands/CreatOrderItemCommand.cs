@@ -1,5 +1,5 @@
-﻿using Flunt.Notifications;
-using Flunt.Validations;
+﻿using Flunt.Validations;
+using Flunt.Notifications;
 using Store.Domain.Commands.Interfaces;
 
 namespace Store.Domain.Commands
