@@ -48,7 +48,22 @@ namespace Store.Test.Handlers
         [TestCategory("Handlers")]
         public void Dado_um_pedido_sem_itens_o_mesmo_nao_deve_ser_gerado()
         {
-            Assert.Fail();
+            var command = new CreatOrderCommand();
+            command.Customer = "123456789123";
+            command.ZipCode = "123456789";
+            command.PromoCode = "111111111";
+            command.Items.Add(new CreatOrderItemCommand(Guid.Empty, 0));
+
+            var handler = new OrderHandler(
+                _customerRepository,
+                _deliveryFeeRepository,
+                _discountRepository,
+                _productRepository,
+                _orderRepository);
+
+            handler.Handle(command);
+
+            Assert.AreEqual(handler.IsValid, false);
         }
 
         [TestMethod]
@@ -61,7 +76,15 @@ namespace Store.Test.Handlers
             command.PromoCode = "98786545";
             command.Items.Add(new CreatOrderItemCommand(Guid.NewGuid(), 1));
             command.Items.Add(new CreatOrderItemCommand(Guid.NewGuid(), 1));
-            command.Validate();
+
+            var handler = new OrderHandler(
+                _customerRepository,
+                _deliveryFeeRepository,
+                _discountRepository,
+                _productRepository,
+                _orderRepository);
+
+            handler.Handle(command);
 
             Assert.AreEqual(command.IsValid, false);
         }
@@ -71,7 +94,7 @@ namespace Store.Test.Handlers
         public void Dado_um_comando_valido_o_pedido_deve_ser_gerado()
         {
             var command = new CreatOrderCommand();
-            command.Customer = "Carlos da Silva";
+            command.Customer = "123456789123";
             command.ZipCode = "123456789";
             command.PromoCode = "111111111";
             command.Items.Add(new CreatOrderItemCommand(Guid.NewGuid(), 1));

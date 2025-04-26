@@ -35,7 +35,7 @@ namespace Store.Domain.Handlers
         {
             command.Validate();
 
-            if (command.IsValid)
+            if (!command.IsValid)
                 return new GenericCommandResult(false, "Pedido inválido", command.Notifications);
 
             var customer = _customerRepository.Get(command.Customer);//Cliente
