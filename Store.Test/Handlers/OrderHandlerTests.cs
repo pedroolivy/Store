@@ -27,21 +27,46 @@ namespace Store.Test.Handlers
         [TestCategory("Handlers")]
         public void Dado_um_cliente_inexistente_o_pedido_nao_deve_ser_gerado()
         {
-            Assert.Fail();
-        }
+            var command = new CreatOrderCommand();
+            command.Customer = "123456789128";
+            command.ZipCode = "123456789";
+            command.PromoCode = "111111111";
+            command.Items.Add(new CreatOrderItemCommand(Guid.NewGuid(), 1));
+            command.Items.Add(new CreatOrderItemCommand(Guid.NewGuid(), 1));
 
-        [TestMethod]
-        [TestCategory("Handlers")]
-        public void Dado_um_cep_invalido_o_pedido_deve_ser_gerado_normalmente()
-        {
-            Assert.Fail();
+            var handler = new OrderHandler(
+                _customerRepository,
+                _deliveryFeeRepository,
+                _discountRepository,
+                _productRepository,
+                _orderRepository);
+
+            handler.Handle(command);
+
+            Assert.AreEqual(handler.IsValid, false);
         }
 
         [TestMethod]
         [TestCategory("Handlers")]
         public void Dado_um_promocode_inexistente_o_pedido_deve_ser_gerado_normalmente()
         {
-            Assert.Fail();
+            var command = new CreatOrderCommand();
+            command.Customer = "123456789123";
+            command.ZipCode = "123456789";
+            command.PromoCode = "";
+            command.Items.Add(new CreatOrderItemCommand(Guid.NewGuid(), 1));
+            command.Items.Add(new CreatOrderItemCommand(Guid.NewGuid(), 1));
+
+            var handler = new OrderHandler(
+                _customerRepository,
+                _deliveryFeeRepository,
+                _discountRepository,
+                _productRepository,
+                _orderRepository);
+
+            handler.Handle(command);
+
+            Assert.AreEqual(handler.IsValid, true);
         }
 
         [TestMethod]

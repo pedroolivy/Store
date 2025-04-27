@@ -8,12 +8,19 @@ namespace Store.Test.Repositories
         public IEnumerable<Product> Get(IEnumerable<Guid> ids)
         {
             IList<Product> products = new List<Product>();
+            int counter = 1;
 
-            products.Add(new Product("Produto 01", 10, true));
-            products.Add(new Product("Produto 02", 10, true));
-            products.Add(new Product("Produto 03", 10, true));
-            products.Add(new Product("Produto 04", 10, false));
-            products.Add(new Product("Produto 05", 10, false));
+            foreach (var id in ids)
+            {
+                products.Add(new Product(
+                    id,
+                    $"Produto {counter:00}",
+                    10,
+                    counter % 2 == 0                 
+                ));
+
+                counter++;
+            }
 
             return products;
         }

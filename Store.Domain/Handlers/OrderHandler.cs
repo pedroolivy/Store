@@ -10,7 +10,6 @@ namespace Store.Domain.Handlers
 {
     public class OrderHandler : Notifiable<Notification>, IHandler<CreatOrderCommand>
     {
-
         private readonly ICustomerRepository _customerRepository;
         private readonly IDeliveryfreeRespository _deliveryfreeRespository;
         private readonly IDiscountRepository _discountRepository;
